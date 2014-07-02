@@ -1,0 +1,14 @@
+CHANGES IN VERSION 1.0.0
+-----------------------
+
+NEW FEATURES
+
+    o Infrastructures for domain-centric ontologies and annotations
+
+    o Domain-based enrichment analysis
+
+    o Semantic similarity between domains according to their annotations by an ontology
+    
+    o Random Walk with Restart on domain semantic similarity network
+    
+    o Support for high-performance parallel computing
