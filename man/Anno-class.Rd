@@ -2,7 +2,7 @@
 \name{Anno-class}
 \alias{Anno}
 \alias{Anno-class}
-\title{Definition for class Anno}
+\title{Definition for S4 class Anno}
 \value{
 Class Anno
 }
@@ -12,15 +12,17 @@ Class Anno
 \section{Slots}{
 
 \describe{
-\item{\code{annoData}}{An object of class AnnoData, containing data
-matrix with the column number equal to nrow(termData) and the row
-number equal to nrow(domainData).}
+\item{\code{annoData}}{An object of S4 class \code{\link{AnnoData}},
+containing data matrix with the column number equal to nrow(termData)
+and the row number equal to nrow(domainData).}
 
-\item{\code{termData}}{An object of class InfoDataFrame, describing
-information on columns in annoData.}
+\item{\code{termData}}{An object of S4 class
+\code{\link{InfoDataFrame}}, describing information on columns in
+annoData.}
 
-\item{\code{domainData}}{An object of class InfoDataFrame, describing
-information on rows in annoData.}
+\item{\code{domainData}}{An object of S4 class
+\code{\link{InfoDataFrame}}, describing information on rows in
+annoData.}
 }}
 \section{Creation}{
 An object of this class can be created via:
@@ -30,13 +32,14 @@ An object of this class can be created via:
 \section{Methods}{
 Class-specific methods: \itemize{ \item{\code{dim()}:
 }{retrieve the dimension in the object}
-\item{\code{annoData()}: }{retrieve annoData in the
-object} \item{\code{termData()}: }{retrieve termData (as
-class InfoDataFrame) in the object}
-\item{\code{domainData()}: }{retrieve domainData (as
-class InfoDataFrame) in the object} \item{\code{tData()}:
-}{retrieve termData in the object} \item{\code{dData()}:
-}{retrieve domainData in the object}
+\item{\code{annoData()}: }{retrieve the slot 'annoData'
+in the object} \item{\code{termData()}: }{retrieve the
+slot 'termData' (as class InfoDataFrame) in the object}
+\item{\code{domainData()}: }{retrieve the slot
+'domainData' (as class InfoDataFrame) in the object}
+\item{\code{tData()}: }{retrieve termData (as data.frame)
+in the object} \item{\code{dData()}: }{retrieve
+domainData (as data.frame) in the object}
 \item{\code{termNames()}: }{retrieve term names (ie, row
 names of termData) in the object}
 \item{\code{domanNames()}: }{retrieve domain names (ie,
@@ -44,9 +47,11 @@ row names of domainData) in the object} } Standard
 generic methods: \itemize{ \item{\code{str()}: }{compact
 display of the content in the object}
 \item{\code{show()}: }{abbreviated display of the object}
-\item{\code{as(matrix, "Anno")}: }{convert a matrix (or
-data.frame) to an object of class Anno}
-\item{\code{[i,j]}: }{get the subset of the same class} }
+\item{\code{as(matrix, "Anno")}: }{convert a matrix to an
+object of class Anno} \item{\code{as(dgCMatrix, "Anno")}:
+}{convert a dgCMatrix (a sparse matrix) to an object of
+class Anno} \item{\code{[i,j]}: }{get the subset of the
+same class} }
 }
 
 \section{Access}{
@@ -100,5 +105,6 @@ x[1:3,1:2]
 \seealso{
 \code{\link{Anno-method}}
 }
+\keyword{S4}
 \keyword{classes}
 

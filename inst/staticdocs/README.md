@@ -1,12 +1,14 @@
 <a href="index.html"><IMG src="dcGOR_logo.png" height="100px" id="logo"></a>
 
-<B><h4>An open-source R package for analysing domain-centric ontologies and annotations</h4></B>
+<B><h4>An open-source <a href="http://www.r-project.org" target="R" style="font-size: 12px; color: #4169E1; text-decoration: overline; border-bottom: 1px solid #4169E1">R</a> package tailored to the needs of analysing domain-centric ontologies and annotations (<a href="http://supfam.org/SUPERFAMILY/dcGO" target="dcGO" style="font-size: 12px; color: #F87217; text-decoration: overline; border-bottom: 1px solid #F87217">dcGO</a>)</h4></B>
+
 
 ## Features
 
-* `Database`: R package for the [dcGO](http://supfam.org/SUPERFAMILY/dcGO) database that provides domain-centric annotations by organism-independent ontologies (eg "Gene Ontology") and organism-specific ontologies (eg "Disease Ontology", "Human Phenotype", "Mammalian Phenotype", and many others in model organisms);
-* `Infrastructure`: data structure storing ontologies (as an "igraph" class) and annotations (as an "Anno" class);
-* `Enrichment analysis`: domain-based enrichment analysis using a wide variety of ontologies;
-* `Semantic similarity`: domain-domain semantic similarity according to their annotations by an ontology;
-* `Random Walk with Restart`: support for walk on domain semantic similarity network;
-* `Parallel computing`: a huge save in computational runtime with parallel option.
+* `Database`: R package providing domain-centric annotations by organism-independent ontologies (eg "Gene Ontology") and organism-specific ontologies (eg "Human Phenotype" and "Mammalian Phenotype"). See <a href="docs.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">Documentations</a>
+* `Infrastructure`: data structure storing ontologies (as objects of S4 class <a href="Onto-class.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">Onto</a>), annotations (as objects of S4 class <a href="Anno-class.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">Anno</a>), enrichment outputs (as objects of S4 class <a href="Eoutput-class.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">Eoutput</a>), domain networks (as objects of S4 class <a href="Dnetwork-class.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">Dnetwork</a>), and RWR-based contact network outputs (as objects of S4 classes <a href="Cnetwork-class.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">Cnetwork</a> and <a href="Coutput-class.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">Coutput</a>)
+* `True-path rule`: able to propagate annotations to all ancestor terms. See <a href="dcDAGannotate.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">dcDAGannotate</a>
+* `Enrichment analysis`: domain-based enrichment analysis and visualisation. See <a href="dcEnrichment.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">dcEnrichment</a> and <a href="visEnrichment.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">visEnrichment</a>
+* `Semantic similarity`: semantic similarity between pairs of domains according to their annotations by an ontology, resulting in a domain (semantic) network. See <a href="dcDAGdomainSim.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">dcDAGdomainSim</a>
+* `Random Walk with Restart`: support for walk on domain semantic similarity network.  See <a href="dcRWRpipeline.html" style="font-size: 12px; color: #000000; text-decoration: none; border-bottom: 1px solid #000000">dcRWRpipeline</a>
+* `Parallel computing`: most of analyses are supported with parallel option to reduce runtime

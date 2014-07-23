@@ -3,7 +3,7 @@
 #' \code{dcRWRpipeline} is supposed to estimate sample relationships (ie. contact strength between samples) from an input domain-sample matrix and an input graph (such as a domain-domain semantic network). The pipeline includes: 1) random walk restart (RWR) of the input graph using the input matrix as seeds; 2) calculation of contact strength (inner products of RWR-smoothed columns of input matrix); 3) estimation of the contact signficance by a randomalisation procedure. It supports two methods how to use RWR: 'direct' for directly applying RWR in the given seeds; 'indirectly' for first pre-computing affinity matrix of the input graph, and then deriving the affinity score. Parallel computing is also supported for Linux or Mac operating systems.
 #'
 #' @param data an input domain-sample data matrix used for seeds. Each value in input domain-sample matrix does not necessarily have to be binary (non-zeros will be used as a weight, but should be non-negative for easy interpretation). 
-#' @param g an object of class "igraph" or "graphNEL"
+#' @param g an object of class "igraph" or \code{\link{Dnetwork}}
 #' @param method the method used to calculate RWR. It can be 'direct' for directly applying RWR, 'indirect' for indirectly applying RWR (first pre-compute affinity matrix and then derive the affinity score)
 #' @param normalise the way to normalise the adjacency matrix of the input graph. It can be 'laplacian' for laplacian normalisation, 'row' for row-wise normalisation, 'column' for column-wise normalisation, or 'none'
 #' @param restart the restart probability used for RWR. The restart probability takes the value from 0 to 1, controlling the range from the starting nodes/seeds that the walker will explore. The higher the value, the more likely the walker is to visit the nodes centered on the starting nodes. At the extreme when the restart probability is zero, the walker moves freely to the neighbors at each step without restarting from seeds, i.e., following a random walk (RW)
@@ -30,12 +30,12 @@
 #' @export
 #' @importFrom dnet dRWR dCheckParallel
 #' @import Matrix
-#' @seealso \code{\link{dcRDataLoader}}, \code{\link{dcDAGannotate}}, \code{\link{dcDAGdomainSim}}
+#' @seealso \code{\link{dcRDataLoader}}, \code{\link{dcDAGannotate}}, \code{\link{dcDAGdomainSim}}, \code{\link{dcConverter}}
 #' @include dcRWRpipeline.r
 #' @examples
 #' \dontrun{
-#' # 1) load obo.GOMF (as 'igraph' object)
-#' g <- dcRDataLoader('obo.GOMF')
+#' # 1) load onto.GOMF (as 'Onto' object)
+#' g <- dcRDataLoader('onto.GOMF')
 #'
 #' # 2) load SCOP superfamilies annotated by GOMF (as 'Anno' object)
 #' Anno <- dcRDataLoader('SCOP.sf2GOMF')
@@ -44,23 +44,19 @@
 #' dag <- dcDAGannotate(g, annotations=Anno, path.mode="shortest_paths", verbose=TRUE)
 #'
 #' # 4) calculate pair-wise semantic similarity between 10 randomly chosen domains 
-#' alldomains <- unique(unlist(V(dag)$annotations))
+#' alldomains <- unique(unlist(nInfo(dag)$annotations))
 #' domains <- sample(alldomains,10)
-#' sim <- dcDAGdomainSim(g=dag, domains=domains, method.domain="BM.average", method.term="Resnik", parallel=FALSE, verbose=TRUE)
-#' sim
+#' dnetwork <- dcDAGdomainSim(g=dag, domains=domains, method.domain="BM.average", method.term="Resnik", parallel=FALSE, verbose=TRUE)
+#' dnetwork
 #' 
-#' # 5) convert the above semantic similarity to a network (as an 'igraph' object)
-#' adjmatrix <- as.matrix(sim)
-#' network <- igraph::graph.adjacency(adjmatrix, mode="undirected", weighted=TRUE, diag=FALSE)
-#' 
-#' # 6) estimate RWR dating based sample relationships
+#' # 5) estimate RWR dating based sample/term relationships
 #' # define sets of seeds as data
 #' # each seed with equal weight (i.e. all non-zero entries are '1')
 #' data <- data.frame(aSeeds=c(1,0,1,0,1), bSeeds=c(0,0,1,0,1))
-#' rownames(data) <- V(network)$name[1:5]
+#' rownames(data) <- id(dnetwork)[1:5]
 #' # calcualte their two contact graph
-#' iContact <- dcRWRpipeline(data=data, g=network, parallel=FALSE)
-#' iContact
+#' coutput <- dcRWRpipeline(data=data, g=dnetwork, parallel=FALSE)
+#' coutput
 #' }
 
 dcRWRpipeline <- function(data, g, method=c("indirect","direct"), normalise=c("laplacian","row","column","none"), restart=0.75, normalise.affinity.matrix=c("none","quantile"), permutation=c("random","degree"), num.permutation=100, p.adjust.method=c("BH","BY","bonferroni","holm","hochberg","hommel"), adjp.cutoff=0.05, parallel=TRUE, multicores=NULL, verbose=T)
@@ -81,6 +77,12 @@ dcRWRpipeline <- function(data, g, method=c("indirect","direct"), normalise=c("l
     ## check input data
     if(is.matrix(data) | is.data.frame(data)){
         data <- as.matrix(data)
+        
+        ## remove all columns, each only containing zeros
+        ind <- which(apply(data, 2, sum)!=0)
+        data <- data[,ind]
+        #################################################
+        
         if(ncol(data)<2){
             stop("The input data must be matrix with at least two columns.\n")
         }
@@ -97,14 +99,15 @@ dcRWRpipeline <- function(data, g, method=c("indirect","direct"), normalise=c("l
     if(is.null(cnames)){
         cnames <- seq(1,ncol(data))
     }
+    
     ## check input graph
-    if(class(g)=="graphNEL"){
-        ig <- igraph.from.graphNEL(g)
+    if(class(g)=="Dnetwork"){
+        ig <- dcConverter(g, from='Dnetwork', to='igraph', verbose=F)
     }else{
         ig <- g
     }
     if (class(ig) != "igraph"){
-        stop("The function must apply to either 'igraph' or 'graphNEL' object.\n")
+        stop("The function must apply to either 'igraph' or 'Dnetwork' object.\n")
     }
     
     
@@ -298,7 +301,14 @@ dcRWRpipeline <- function(data, g, method=c("indirect","direct"), normalise=c("l
     adjmatrix[flag] <- zscore[flag]
     adjmatrix <- as.matrix(adjmatrix)
     icontact <- igraph::graph.adjacency(adjmatrix, mode="undirected", weighted=T, diag=F, add.colnames=NULL, add.rownames=NA)
-
+    ## remove isolated nodes
+    icontact <- igraph::delete.vertices(icontact, which(igraph::degree(icontact)==0))
+    ## convert to an object of class 'Cnetwork'
+    cnetwork <- dcConverter(icontact, from='igraph', to='Cnetwork')
+    
+    ## create an object of class Cnetwork
+    #cnetwork <- as(adjmatrix, "Cnetwork")
+    
     ####################################################################################
     endT <- Sys.time()
     if(verbose){
@@ -309,15 +319,13 @@ dcRWRpipeline <- function(data, g, method=c("indirect","direct"), normalise=c("l
     runTime <- as.numeric(difftime(strptime(endT, "%Y-%m-%d %H:%M:%S"), strptime(startT, "%Y-%m-%d %H:%M:%S"), units="secs"))
     message(paste(c("Runtime in total is: ",runTime," secs\n"), collapse=""), appendLF=T)
     
-    iContact <- list(ratio      = ratio, 
+    coutput <- new("Coutput",
+                     ratio      = ratio, 
                      zscore     = zscore, 
-                     pval       = pval,
-                     adjpval    = adjpval, 
-                     icontact   = icontact, 
-                     Amatrix    = sAmatrix,
-                     call       = match.call()
-                    )
-    class(iContact) <- "iContact"
-    
-    invisible(iContact)
+                     pvalue     = pval,
+                     adjp       = adjpval,
+                     cnetwork   = cnetwork
+                 )
+
+    invisible(coutput)
 }

@@ -7,6 +7,7 @@
 \alias{annoData,Anno-method}
 \alias{dData}
 \alias{dData,Anno-method}
+\alias{dgCMatrix2Anno}
 \alias{dim,Anno-method}
 \alias{domainData}
 \alias{domainData,Anno-method}
@@ -20,7 +21,7 @@
 \alias{termData,Anno-method}
 \alias{termNames}
 \alias{termNames,Anno-method}
-\title{Methods defined for class Anno}
+\title{Methods defined for S4 class Anno}
 \usage{
 \S4method{dim}{Anno}(x)
 
@@ -65,5 +66,6 @@ Methods defined for class \code{Anno}.
 \seealso{
 \code{\link{Anno-class}}
 }
+\keyword{S4}
 \keyword{methods}
 

@@ -1,10 +1,10 @@
-\name{obo.UP}
-\alias{obo.UP}
+\name{onto.UP}
+\alias{onto.UP}
 
 \title{UniProtKB UniPathway (UP).}
 
 \usage{
-data(obo.UP)
+data(onto.UP)
 }
 
 \description{
@@ -18,13 +18,17 @@ controlled vocabulary for pathway annotation in UniProtKB.
 }
 
 \value{
-an object of class "igraph". As a direct graph, it has attributes to
-vertices/nodes:
+an object of S4 class \link{Onto}. It has slots for "nodeInfo" and
+"adjMatrix"
 \itemize{
-\item{\code{vertex attributes}: "name" (i.e. Term ID), "term_id" (i.e.
-Term ID), "term_name" (i.e. Term Name), "term_namespace" (i.e. Term
+\item{\code{nodeInfo}: an object of S4 class \link{InfoDataFrame},
+describing information on nodes/terms including: "term_id" (i.e. Term
+ID), "term_name" (i.e. Term Name), "term_namespace" (i.e. Term
 Namespace), and "term_distance" (i.e. Term Distance: the distance to
 the root; always 0 for the root itself)}
+\item{\code{adjMatrix}: an object of S4 class \link{AdjData},
+containing adjacency data matrix, with rows for parent (arrow-outbound)
+and columns for children (arrow-inbound)}
 }
 }
 
@@ -40,6 +44,6 @@ on functions, phenotypes, diseases and more. \emph{Nucleic Acids Res},
 \keyword{datasets}
 
 \examples{
-data(obo.UP)
-obo.UP
+data(onto.UP)
+onto.UP
 }

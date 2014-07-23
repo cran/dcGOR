@@ -1,10 +1,10 @@
-\name{obo.HPPA}
-\alias{obo.HPPA}
+\name{onto.HPPA}
+\alias{onto.HPPA}
 
 \title{Human Phenotype Phenotypic Abnormality (HPPA).}
 
 \usage{
-data(obo.HPPA)
+data(onto.HPPA)
 }
 
 \description{
@@ -17,13 +17,17 @@ prepared based on
 }
 
 \value{
-an object of class "igraph". As a direct graph, it has attributes to
-vertices/nodes:
+an object of S4 class \link{Onto}. It has slots for "nodeInfo" and
+"adjMatrix"
 \itemize{
-\item{\code{vertex attributes}: "name" (i.e. Term ID), "term_id" (i.e.
-Term ID), "term_name" (i.e. Term Name), "term_namespace" (i.e. Term
+\item{\code{nodeInfo}: an object of S4 class \link{InfoDataFrame},
+describing information on nodes/terms including: "term_id" (i.e. Term
+ID), "term_name" (i.e. Term Name), "term_namespace" (i.e. Term
 Namespace), and "term_distance" (i.e. Term Distance: the distance to
 the root; always 0 for the root itself)}
+\item{\code{adjMatrix}: an object of S4 class \link{AdjData},
+containing adjacency data matrix, with rows for parent (arrow-outbound)
+and columns for children (arrow-inbound)}
 }
 }
 
@@ -40,6 +44,6 @@ on functions, phenotypes, diseases and more. \emph{Nucleic Acids Res},
 \keyword{datasets}
 
 \examples{
-data(obo.HPPA)
-obo.HPPA
+data(onto.HPPA)
+onto.HPPA
 }

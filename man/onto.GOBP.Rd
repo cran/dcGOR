@@ -1,15 +1,15 @@
-\name{obo.GOMF}
-\alias{obo.GOMF}
+\name{onto.GOBP}
+\alias{onto.GOBP}
 
-\title{Gene Ontology Molecular Function (GOMF).}
+\title{Gene Ontology Biological Process (GOBP).}
 
 \usage{
-data(obo.GOMF)
+data(onto.GOBP)
 }
 
 \description{
-An R object that contains information on Gene Ontology Molecular
-Function terms. These terms are organised as a direct acyclic graph
+An R object that contains information on Gene Ontology Biological
+Process terms. These terms are organised as a direct acyclic graph
 (DAG), which is further stored as an object of the class 'igraph' (see
 \url{http://igraph.org/r/doc/aaa-igraph-package.html}). This data is
 prepared based on
@@ -19,13 +19,17 @@ retained.
 }
 
 \value{
-an object of class "igraph". As a direct graph, it has attributes to
-vertices/nodes:
+an object of S4 class \link{Onto}. It has slots for "nodeInfo" and
+"adjMatrix"
 \itemize{
-\item{\code{vertex attributes}: "name" (i.e. Term ID), "term_id" (i.e.
-Term ID), "term_name" (i.e. Term Name), "term_namespace" (i.e. Term
+\item{\code{nodeInfo}: an object of S4 class \link{InfoDataFrame},
+describing information on nodes/terms including: "term_id" (i.e. Term
+ID), "term_name" (i.e. Term Name), "term_namespace" (i.e. Term
 Namespace), and "term_distance" (i.e. Term Distance: the distance to
 the root; always 0 for the root itself)}
+\item{\code{adjMatrix}: an object of S4 class \link{AdjData},
+containing adjacency data matrix, with rows for parent (arrow-outbound)
+and columns for children (arrow-inbound)}
 }
 }
 
@@ -41,6 +45,6 @@ on functions, phenotypes, diseases and more. \emph{Nucleic Acids Res},
 \keyword{datasets}
 
 \examples{
-data(obo.GOMF)
-obo.GOMF
+data(onto.GOBP)
+onto.GOBP
 }

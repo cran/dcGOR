@@ -17,7 +17,8 @@ necessarily have to be binary (non-zeros will be used as
 a weight, but should be non-negative for easy
 interpretation).}
 
-\item{g}{an object of class "igraph" or "graphNEL"}
+\item{g}{an object of class "igraph" or
+\code{\link{Dnetwork}}}
 
 \item{method}{the method used to calculate RWR. It can be
 'direct' for directly applying RWR, 'indirect' for
@@ -128,8 +129,8 @@ better to use 'indrect' method (for a single run).
 }
 \examples{
 \dontrun{
-# 1) load obo.GOMF (as 'igraph' object)
-g <- dcRDataLoader('obo.GOMF')
+# 1) load onto.GOMF (as 'Onto' object)
+g <- dcRDataLoader('onto.GOMF')
 
 # 2) load SCOP superfamilies annotated by GOMF (as 'Anno' object)
 Anno <- dcRDataLoader('SCOP.sf2GOMF')
@@ -139,30 +140,25 @@ dag <- dcDAGannotate(g, annotations=Anno, path.mode="shortest_paths",
 verbose=TRUE)
 
 # 4) calculate pair-wise semantic similarity between 10 randomly chosen domains
-alldomains <- unique(unlist(V(dag)$annotations))
+alldomains <- unique(unlist(nInfo(dag)$annotations))
 domains <- sample(alldomains,10)
-sim <- dcDAGdomainSim(g=dag, domains=domains,
+dnetwork <- dcDAGdomainSim(g=dag, domains=domains,
 method.domain="BM.average", method.term="Resnik", parallel=FALSE,
 verbose=TRUE)
-sim
+dnetwork
 
-# 5) convert the above semantic similarity to a network (as an 'igraph' object)
-adjmatrix <- as.matrix(sim)
-network <- igraph::graph.adjacency(adjmatrix, mode="undirected",
-weighted=TRUE, diag=FALSE)
-
-# 6) estimate RWR dating based sample relationships
+# 5) estimate RWR dating based sample/term relationships
 # define sets of seeds as data
 # each seed with equal weight (i.e. all non-zero entries are '1')
 data <- data.frame(aSeeds=c(1,0,1,0,1), bSeeds=c(0,0,1,0,1))
-rownames(data) <- V(network)$name[1:5]
+rownames(data) <- id(dnetwork)[1:5]
 # calcualte their two contact graph
-iContact <- dcRWRpipeline(data=data, g=network, parallel=FALSE)
-iContact
+coutput <- dcRWRpipeline(data=data, g=dnetwork, parallel=FALSE)
+coutput
 }
 }
 \seealso{
 \code{\link{dcRDataLoader}}, \code{\link{dcDAGannotate}},
-\code{\link{dcDAGdomainSim}}
+\code{\link{dcDAGdomainSim}}, \code{\link{dcConverter}}
 }
 

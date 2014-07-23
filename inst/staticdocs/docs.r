@@ -4,11 +4,13 @@ list(
     
     index = list(
         sd_section("Functions for analysis and visualisations",
-            "These analysis and visualisation functions are used to process ontologies (and annotations), to do enrichment analysis, to calculate semantic similarity between annotated domains based on ontology term semantic similarity, and to perform random walk with restart upon domain-domain (semantic) networks. Most of analyses can be done via high-performance parallel computing.",
+            "These analysis and visualisation functions are used to process ontologies (and annotations), to do enrichment analysis, to calculate semantic similarity between annotated domains based on ontology term semantic similarity, and to perform random walk with restart upon domain-domain (semantic) networks. Most of analyses are supported by high-performance parallel computing.",
             c(
                 'dcDAGannotate',
                 'dcRDataLoader',
+                'dcConverter',
                 'dcEnrichment',
+                'visEnrichment',
                 'dcDAGdomainSim',
                 'dcRWRpipeline'
             )
@@ -20,23 +22,34 @@ list(
                 'InfoDataFrame-method',
                 'AnnoData-class',
                 'Anno-class',
-                'Anno-method'
+                'Anno-method',
+                'AdjData-class',
+                'Onto-class',
+                'Onto-method',
+                'Eoutput-class',
+                'Eoutput-method',
+                'Dnetwork-class',
+                'Dnetwork-method',
+                'Cnetwork-class',
+                'Cnetwork-method',
+                'Coutput-class',
+                'Coutput-method'
             )
         ),
         sd_section("Ontologies mainly including open biomedical ontology (obo)",
-            "These ontologies each are represented as a direct acyclic graph (DAG). DAG is stored as an object of class 'igraph'.",
+            "These ontologies each are represented as a direct acyclic graph (DAG). DAG is stored as an object of class 'Onto'.",
             c(
-                "obo.GOBP",
-                "obo.GOMF",
-                "obo.GOCC",
-                "obo.DO",
-                "obo.HPPA",
-                "obo.HPMI",
-                "obo.HPON",
-                "obo.MP",
-                "obo.EC",
-                "obo.KW",
-                "obo.UP"
+                "onto.GOBP",
+                "onto.GOMF",
+                "onto.GOCC",
+                "onto.DO",
+                "onto.HPPA",
+                "onto.HPMI",
+                "onto.HPON",
+                "onto.MP",
+                "onto.EC",
+                "onto.KW",
+                "onto.UP"
             )
         ),
         sd_section("SCOP domain superfamilies and their annotations by ontologies",
