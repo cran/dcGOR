@@ -1,17 +1,17 @@
-\name{SCOP.sf2EC}
-\alias{SCOP.sf2EC}
+\name{Pfam2GOBP}
+\alias{Pfam2GOBP}
 
-\title{Annotations of SCOP domain superfamilies (sf) by Enzyme Commission (EC).}
+\title{Annotations of Pfam domains by Gene Ontology Biological Process (GOBP).}
 
 \usage{
-data(SCOP.sf2EC)
+data(Pfam2GOBP)
 }
 
 \description{
-An object of class "Anno" that contains associations between Enzyme
-Commission terms and SCOP domain superfamilies (sf). This data is
-prepared based on the dcGO database (see
-\url{http://supfam.org/SUPERFAMILY/dcGO/}).
+An object of class "Anno" that contains associations between Gene
+Ontology Biological Process terms and Pfam domains. This data is
+prepared based on the Pfam database (see \url{http://pfam.xfam.org})
+and \url{ftp://ftp.geneontology.org/pub/go/external2go/pfam2go}.
 }
 
 \value{
@@ -24,15 +24,14 @@ columns in annoData), including: "ID" (i.e. term ID), "Name" (i.e. term
 Names), "Namespace" (i.e. term Namespace), and "Distance" (i.e. term
 Distance to the ontology root)}
 \item{\code{domainData}: variables describing domains (i.e. rows in
-annoData), including: "id" for SCOP sunid, and "level" for SCOP level,
-"description" for SCOP description}
+annoData), including: "id" for Pfam accession ID, and "level" always
+equals "Pfam", "description" for Pfam description}
 }
 }
 
 \references{
-Fang H and Gough J. (2013) dcGO: database of domain-centric ontologies
-on functions, phenotypes, diseases and more. \emph{Nucleic Acids Res},
-41(Database issue):D536-44.
+Finn et al. (2014) The Pfam protein families database. \emph{Nucleic
+Acids Res}, 42(Database issue):D222-D230.
 }
 
 \seealso{
@@ -43,14 +42,14 @@ on functions, phenotypes, diseases and more. \emph{Nucleic Acids Res},
 
 \examples{
 # load data
-data(SCOP.sf2EC)
-SCOP.sf2EC
+data(Pfam2GOBP)
+Pfam2GOBP
 # retrieve info on ontology terms
-termData(SCOP.sf2EC)
-# retrieve info on SCOP domains
-domainData(SCOP.sf2EC)
+termData(Pfam2GOBP)
+# retrieve info on Pfam domains
+domainData(Pfam2GOBP)
 # retrieve the first 5 rows and columns of annotation data
-x <- annoData(SCOP.sf2EC)[1:5,1:5]
+x <- annoData(Pfam2GOBP)[1:5,1:5]
 x
 # convert the above retrieval to the full matrix
 as.matrix(x)

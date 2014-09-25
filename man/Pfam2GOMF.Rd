@@ -1,17 +1,17 @@
-\name{SCOP.fa2UP}
-\alias{SCOP.fa2UP}
+\name{Pfam2GOMF}
+\alias{Pfam2GOMF}
 
-\title{Annotations of SCOP domain families (fa) by UniProtKB UniPathway (UP).}
+\title{Annotations of Pfam domains by Gene Ontology Molecular Function (GOMF).}
 
 \usage{
-data(SCOP.fa2UP)
+data(Pfam2GOMF)
 }
 
 \description{
-An object of class "Anno" that contains associations between UniProtKB
-UniPathway terms and SCOP domain families (fa). This data is prepared
-based on the dcGO database (see
-\url{http://supfam.org/SUPERFAMILY/dcGO/}).
+An object of class "Anno" that contains associations between Gene
+Ontology Molecular Function terms and Pfam domains. This data is
+prepared based on the Pfam database (see \url{http://pfam.xfam.org})
+and \url{ftp://ftp.geneontology.org/pub/go/external2go/pfam2go}.
 }
 
 \value{
@@ -24,15 +24,14 @@ columns in annoData), including: "ID" (i.e. term ID), "Name" (i.e. term
 Names), "Namespace" (i.e. term Namespace), and "Distance" (i.e. term
 Distance to the ontology root)}
 \item{\code{domainData}: variables describing domains (i.e. rows in
-annoData), including: "id" for SCOP sunid, and "level" for SCOP level,
-"description" for SCOP description}
+annoData), including: "id" for Pfam accession ID, and "level" always
+equals "Pfam", "description" for Pfam description}
 }
 }
 
 \references{
-Fang H and Gough J. (2013) dcGO: database of domain-centric ontologies
-on functions, phenotypes, diseases and more. \emph{Nucleic Acids Res},
-41(Database issue):D536-44.
+Finn et al. (2014) The Pfam protein families database. \emph{Nucleic
+Acids Res}, 42(Database issue):D222-D230.
 }
 
 \seealso{
@@ -43,14 +42,14 @@ on functions, phenotypes, diseases and more. \emph{Nucleic Acids Res},
 
 \examples{
 # load data
-data(SCOP.fa2UP)
-SCOP.fa2UP
+data(Pfam2GOMF)
+Pfam2GOMF
 # retrieve info on ontology terms
-termData(SCOP.fa2UP)
-# retrieve info on SCOP domains
-domainData(SCOP.fa2UP)
+termData(Pfam2GOMF)
+# retrieve info on Pfam domains
+domainData(Pfam2GOMF)
 # retrieve the first 5 rows and columns of annotation data
-x <- annoData(SCOP.fa2UP)[1:5,1:5]
+x <- annoData(Pfam2GOMF)[1:5,1:5]
 x
 # convert the above retrieval to the full matrix
 as.matrix(x)

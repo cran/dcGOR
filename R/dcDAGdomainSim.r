@@ -25,31 +25,123 @@
 #' @include dcDAGdomainSim.r
 #' @examples
 #' \dontrun{
-#' # 1) load onto.GOMF (as 'Onto' object)
+#' # 1) Semantic similarity between SCOP domain superfamilies (sf)
+#' ## 1a) load onto.GOMF (as 'Onto' object)
 #' g <- dcRDataLoader('onto.GOMF')
-#'
-#' # 2) load SCOP superfamilies annotated by GOMF (as 'Anno' object)
+#' ## 1b) load SCOP superfamilies annotated by GOMF (as 'Anno' object)
 #' Anno <- dcRDataLoader('SCOP.sf2GOMF')
-#'
-#' # 3) prepare for ontology appended with annotation information
+#' ## 1c) prepare for ontology appended with annotation information
 #' dag <- dcDAGannotate(g, annotations=Anno, path.mode="shortest_paths", verbose=FALSE)
-#'
-#' # 4) calculate pair-wise semantic similarity between 6 randomly chosen domains
+#' ## 1d) calculate pair-wise semantic similarity between 8 randomly chosen domains
 #' alldomains <- unique(unlist(nInfo(dag)$annotations))
-#' domains <- sample(alldomains,6)
+#' domains <- sample(alldomains,8)
 #' dnetwork <- dcDAGdomainSim(g=dag, domains=domains, method.domain="BM.average", method.term="Resnik", parallel=FALSE, verbose=TRUE)
 #' dnetwork
-#'
-#' # 5) convert it to an object of class 'igraph'
+#' ## 1e) convert it to an object of class 'igraph'
 #' ig <- dcConverter(dnetwork, from='Dnetwork', to='igraph')
 #' ig
-#'
-#' # 6) visualise the domain network
-#' ## extract edge weight (with 2-digit precision)
+#' ## 1f) visualise the domain network
+#' ### extract edge weight (with 2-digit precision)
 #' x <- signif(E(ig)$weight, digits=2)
-#' ## rescale into an interval [1,4] as edge width
+#' ### rescale into an interval [1,4] as edge width
 #' edge.width <- 1 + (x-min(x))/(max(x)-min(x))*3
-#' ## do visualisation
+#' ### do visualisation
+#' dnet::visNet(g=ig, vertex.shape="sphere", edge.width=edge.width, edge.label=x, edge.label.cex=0.7)
+#'
+#' ###########################################################
+#' # 2) Semantic similarity between Pfam domains (Pfam)
+#' ## 2a) load onto.GOMF (as 'Onto' object)
+#' g <- dcRDataLoader('onto.GOMF')
+#' ## 2b) load Pfam domains annotated by GOMF (as 'Anno' object)
+#' Anno <- dcRDataLoader('Pfam2GOMF')
+#' ## 2c) prepare for ontology appended with annotation information
+#' dag <- dcDAGannotate(g, annotations=Anno, path.mode="shortest_paths", verbose=FALSE)
+#' ## 2d) calculate pair-wise semantic similarity between 8 randomly chosen domains
+#' alldomains <- unique(unlist(nInfo(dag)$annotations))
+#' domains <- sample(alldomains,8)
+#' dnetwork <- dcDAGdomainSim(g=dag, domains=domains, method.domain="BM.average", method.term="Resnik", parallel=FALSE, verbose=TRUE)
+#' dnetwork
+#' ## 2e) convert it to an object of class 'igraph'
+#' ig <- dcConverter(dnetwork, from='Dnetwork', to='igraph')
+#' ig
+#' ## 2f) visualise the domain network
+#' ### extract edge weight (with 2-digit precision)
+#' x <- signif(E(ig)$weight, digits=2)
+#' ### rescale into an interval [1,4] as edge width
+#' edge.width <- 1 + (x-min(x))/(max(x)-min(x))*3
+#' ### do visualisation
+#' dnet::visNet(g=ig, vertex.shape="sphere", edge.width=edge.width, edge.label=x, edge.label.cex=0.7)
+#'
+#' ###########################################################
+#' # 3) Semantic similarity between InterPro domains (InterPro)
+#' ## 3a) load onto.GOMF (as 'Onto' object)
+#' g <- dcRDataLoader('onto.GOMF')
+#' ## 3b) load InterPro domains annotated by GOMF (as 'Anno' object)
+#' Anno <- dcRDataLoader('InterPro2GOMF')
+#' ## 3c) prepare for ontology appended with annotation information
+#' dag <- dcDAGannotate(g, annotations=Anno, path.mode="shortest_paths", verbose=FALSE)
+#' ## 3d) calculate pair-wise semantic similarity between 8 randomly chosen domains
+#' alldomains <- unique(unlist(nInfo(dag)$annotations))
+#' domains <- sample(alldomains,8)
+#' dnetwork <- dcDAGdomainSim(g=dag, domains=domains, method.domain="BM.average", method.term="Resnik", parallel=FALSE, verbose=TRUE)
+#' dnetwork
+#' ## 3e) convert it to an object of class 'igraph'
+#' ig <- dcConverter(dnetwork, from='Dnetwork', to='igraph')
+#' ig
+#' ## 3f) visualise the domain network
+#' ### extract edge weight (with 2-digit precision)
+#' x <- signif(E(ig)$weight, digits=2)
+#' ### rescale into an interval [1,4] as edge width
+#' edge.width <- 1 + (x-min(x))/(max(x)-min(x))*3
+#' ### do visualisation
+#' dnet::visNet(g=ig, vertex.shape="sphere", edge.width=edge.width, edge.label=x, edge.label.cex=0.7)
+#' 
+#' ###########################################################
+#' # 4) Semantic similarity between Rfam RNA families (Rfam)
+#' ## 4a) load onto.GOBP (as 'Onto' object)
+#' g <- dcRDataLoader('onto.GOBP')
+#' ## 4b) load Rfam families annotated by GOBP (as 'Anno' object)
+#' Anno <- dcRDataLoader('Rfam2GOBP')
+#' ## 4c) prepare for ontology appended with annotation information
+#' dag <- dcDAGannotate(g, annotations=Anno, path.mode="shortest_paths", verbose=FALSE)
+#' ## 4d) calculate pair-wise semantic similarity between 8 randomly chosen RNAs
+#' alldomains <- unique(unlist(nInfo(dag)$annotations))
+#' domains <- sample(alldomains,8)
+#' dnetwork <- dcDAGdomainSim(g=dag, domains=domains, method.domain="BM.average", method.term="Resnik", parallel=FALSE, verbose=TRUE)
+#' dnetwork
+#' ## 4e) convert it to an object of class 'igraph'
+#' ig <- dcConverter(dnetwork, from='Dnetwork', to='igraph')
+#' ig
+#' ## 4f) visualise the domain network
+#' ### extract edge weight (with 2-digit precision)
+#' x <- signif(E(ig)$weight, digits=2)
+#' ### rescale into an interval [1,4] as edge width
+#' edge.width <- 1 + (x-min(x))/(max(x)-min(x))*3
+#' ### do visualisation
+#' dnet::visNet(g=ig, vertex.shape="sphere", edge.width=edge.width, edge.label=x, edge.label.cex=0.7)
+#'
+#' ###########################################################
+#' # 5) Advanced usage: customised data for ontology and annotations
+#' # 5a) customise ontology
+#' g <- dcBuildOnto(relations.file="http://supfam.org/dcGOR/data/onto/igraph_GOMF_edges.txt", nodes.file="http://supfam.org/dcGOR/data/onto/igraph_GOMF_nodes.txt", output.file="ontology.RData")
+#' # 5b) customise Anno
+#' Anno <- dcBuildAnno(domain_info.file="http://supfam.org/dcGOR/data/InterPro/InterPro.txt", term_info.file="http://supfam.org/dcGOR/data/InterPro/GO.txt", association.file="http://supfam.org/dcGOR/data/InterPro/Domain2GOMF.txt", output.file="annotations.RData")
+#' ## 5c) prepare for ontology appended with annotation information
+#' dag <- dcDAGannotate(g, annotations=Anno, path.mode="shortest_paths", verbose=FALSE)
+#' ## 5d) calculate pair-wise semantic similarity between 8 randomly chosen domains
+#' alldomains <- unique(unlist(nInfo(dag)$annotations))
+#' domains <- sample(alldomains,8)
+#' dnetwork <- dcDAGdomainSim(g=dag, domains=domains, method.domain="BM.average", method.term="Resnik", parallel=FALSE, verbose=TRUE)
+#' dnetwork
+#' ## 5e) convert it to an object of class 'igraph'
+#' ig <- dcConverter(dnetwork, from='Dnetwork', to='igraph')
+#' ig
+#' ## 5f) visualise the domain network
+#' ### extract edge weight (with 2-digit precision)
+#' x <- signif(E(ig)$weight, digits=2)
+#' ### rescale into an interval [1,4] as edge width
+#' edge.width <- 1 + (x-min(x))/(max(x)-min(x))*3
+#' ### do visualisation
 #' dnet::visNet(g=ig, vertex.shape="sphere", edge.width=edge.width, edge.label=x, edge.label.cex=0.7)
 #' }
 
@@ -96,7 +188,8 @@ dcDAGdomainSim <- function (g, domains=NULL, method.domain=c("BM.average","BM.ma
     }
 
     anno <- V(ig)$annotations
-    alldomains <- sort(as.numeric(unique(unlist(anno))))
+    #alldomains <- sort(as.numeric(unique(unlist(anno))))
+    alldomains <- sort(unique(unlist(anno)))
     
     ## checking input domains
     domains <- domains[!is.na(domains)]
@@ -163,10 +256,22 @@ dcDAGdomainSim <- function (g, domains=NULL, method.domain=c("BM.average","BM.ma
     ###### parallel computing
     flag_parallel <- F
     if(parallel==TRUE){
+        
+        ############################
+        if(0){
+        pkgs <- c("doMC", "foreach")
+        if (any(pkgs %in% rownames(installed.packages()))) {
+            sapply(pkgs, function(pkg) {
+                suppressPackageStartupMessages(require(pkg, character.only = T))
+            })
+        }
+        }
+        ############################
+    
         flag_parallel <- dnet::dCheckParallel(multicores=multicores, verbose=verbose)
         if(flag_parallel){
             if(method.domain=='average'){
-                sim <- foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind) %dopar% {
+                sim <- foreach::`%dopar%` (foreach::foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind), {
                     ind1 <- domains2terms_index[[i]]
                     progress_indicate(i, num_domains, 10, flag=T)
                     fast <- T
@@ -182,9 +287,9 @@ dcDAGdomainSim <- function (g, domains=NULL, method.domain=c("BM.average","BM.ma
                         x[js] <- res
                         x
                     }
-                }
+                })
             }else if(method.domain=='max'){
-                sim <- foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind) %dopar% {
+                sim <- foreach::`%dopar%` (foreach::foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind), {
                     ind1 <- domains2terms_index[[i]]
                     progress_indicate(i, num_domains, 10, flag=T)
                     fast <- T
@@ -200,9 +305,9 @@ dcDAGdomainSim <- function (g, domains=NULL, method.domain=c("BM.average","BM.ma
                         x[js] <- res
                         x
                     }
-                }
+                })
             }else if(method.domain=='BM.average'){
-                sim <- foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind) %dopar% {
+                sim <- foreach::`%dopar%` (foreach::foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind), {
                     ind1 <- domains2terms_index[[i]]
                     progress_indicate(i, num_domains, 10, flag=T)
                     fast <- T
@@ -219,9 +324,9 @@ dcDAGdomainSim <- function (g, domains=NULL, method.domain=c("BM.average","BM.ma
                         x[js] <- res
                         x
                     }
-                }
+                })
             }else if(method.domain=='BM.max'){
-                sim <- foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind) %dopar% {
+                sim <- foreach::`%dopar%` (foreach::foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind), {
                     ind1 <- domains2terms_index[[i]]
                     progress_indicate(i, num_domains, 10, flag=T)
                     fast <- T
@@ -238,9 +343,9 @@ dcDAGdomainSim <- function (g, domains=NULL, method.domain=c("BM.average","BM.ma
                         x[js] <- res
                         x
                     }
-                }
+                })
             }else if(method.domain=='BM.complete'){
-                sim <- foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind) %dopar% {
+                sim <- foreach::`%dopar%` (foreach::foreach(i=1:(num_domains-1), .inorder=T, .combine=rbind), {
                     ind1 <- domains2terms_index[[i]]
                     progress_indicate(i, num_domains, 10, flag=T)
                     fast <- T
@@ -257,7 +362,7 @@ dcDAGdomainSim <- function (g, domains=NULL, method.domain=c("BM.average","BM.ma
                         x[js] <- res
                         x
                     }
-                }
+                })
             }
 
             ## add the last row
