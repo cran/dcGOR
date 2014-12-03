@@ -92,6 +92,7 @@ setClass(
 #' @param object an object of class \code{InfoDataFrame}
 #' @param i an index
 #' @param j an index
+#' @param drop a logic for matrices and arrays. If TRUE the result is coerced to the lowest possible dimension. This only works for extracting elements, not for the replacement
 #' @param ... additional parameters
 #' @docType methods
 #' @keywords S4 methods
@@ -379,6 +380,7 @@ setClass(
 #' @param object an object of class \code{Anno}
 #' @param i an index
 #' @param j an index
+#' @param drop a logic for matrices and arrays. If TRUE the result is coerced to the lowest possible dimension. This only works for extracting elements, not for the replacement
 #' @param ... additional parameters
 #' @docType methods
 #' @keywords S4 methods
@@ -945,6 +947,7 @@ setClass(
 #' @param object an object of class \code{Onto}
 #' @param i an index
 #' @param j an index
+#' @param drop a logic for matrices and arrays. If TRUE the result is coerced to the lowest possible dimension. This only works for extracting elements, not for the replacement
 #' @param ... additional parameters
 #' @docType methods
 #' @keywords S4 methods
@@ -1082,7 +1085,7 @@ setMethod("show",
         cat("An object of S4 class '", class(object), "'\n", sep="")
         adim <- dim(object)
         if (length(adim)>1){
-            cat("@adjMatrix:", if (length(adim)>1) paste(adim[[1]], "a direct matrix of terms (parents/from),",adim[[2]], "terms (children/to)") else NULL, "\n")
+            cat("@adjMatrix:", if (length(adim)>1) paste("a direct matrix of",adim[[1]], "terms (parents/from) X",adim[[2]], "terms (children/to)") else NULL, "\n")
         }
         ## nodeInfo
         if( dim(nodeInfo(object))[1] != 0 ){
@@ -1243,6 +1246,7 @@ setClass(
 #' @param object an object of class \code{Dnetwork}
 #' @param i an index
 #' @param j an index
+#' @param drop a logic for matrices and arrays. If TRUE the result is coerced to the lowest possible dimension. This only works for extracting elements, not for the replacement
 #' @param ... additional parameters
 #' @docType methods
 #' @keywords S4 methods
@@ -1516,6 +1520,7 @@ setClass(
 #' @param object an object of class \code{Cnetwork}
 #' @param i an index
 #' @param j an index
+#' @param drop a logic for matrices and arrays. If TRUE the result is coerced to the lowest possible dimension. This only works for extracting elements, not for the replacement
 #' @param ... additional parameters
 #' @docType methods
 #' @keywords S4 methods

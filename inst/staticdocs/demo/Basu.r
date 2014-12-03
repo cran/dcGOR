@@ -1,11 +1,11 @@
 # This is a demo for analysing promiscuous Pfam domains by Basu et al
 # 
-# This list of promiscuous Pfam domains was reported in <a href="http://www.ncbi.nlm.nih.gov/pubmed/18230802" target="18230802">http://www.ncbi.nlm.nih.gov/pubmed/18230802</a>. There are 215 domains identified as strongly promiscuous (a tendency to occur in diverse domain architectures), in which 76 were taken from Pfam domains and thus used for this demo. It can be found in the file <a href="http://supfam.org/dcGOR/data/demo/domain_promiscuity_Basu_et_al_2008.txt">domain_promiscuity_Basu_et_al_2008.txt</a>, containing two columns: 1st column for Pfam domain ID, and 2nd column for promiscuity value (the higher the more promiscuous).
+# This list of promiscuous Pfam domains was reported in <a href="http://www.ncbi.nlm.nih.gov/pubmed/18230802" target="18230802">http://www.ncbi.nlm.nih.gov/pubmed/18230802</a>. There are 215 domains identified as strongly promiscuous (a tendency to occur in diverse domain architectures), in which 76 were taken from Pfam domains and thus used for this demo. It can be found in the file <a href="http://dcgor.r-forge.r-project.org/data/demo/domain_promiscuity_Basu_et_al_2008.txt">domain_promiscuity_Basu_et_al_2008.txt</a>, containing two columns: 1st column for Pfam domain ID, and 2nd column for promiscuity value (the higher the more promiscuous).
 ###############################################################################
 library(dcGOR)
 
 # Read promiscuous Pfam domains
-domains <- read.delim("http://supfam.org/dcGOR/data/demo/domain_promiscuity_Basu_et_al_2008.txt",header=T)
+domains <- read.delim("http://dcgor.r-forge.r-project.org/data/demo/domain_promiscuity_Basu_et_al_2008.txt",header=T)
 domains[1:5,]
 
 #---------------------------------------------------------------------------
@@ -34,9 +34,8 @@ view(eoutput, top_num=5, sortBy="pvalue", details=TRUE)
 visEnrichment(eoutput, num_top_nodes=4, layout.orientation="top_bottom", zlim=c(0,4))
 #### look at Pfam domains annotated by the most signficant term
 tmp <- as.character(view(eoutput, top_num=1, sortBy="pvalue", details=T)$members)
-tmp <- unlist(strsplit(a,","))
-ind <- match(tmp,rowNames(Pfam))
-Data(Pfam)[ind,]
+tmp <- unlist(strsplit(tmp,","))
+Data(Pfam)[match(tmp,rowNames(Pfam)),]
 
 ## 2) GOMF enrichment analysis, producing an object of S4 class 'Eoutput'
 eoutput <- dcEnrichment(data, domain="Pfam", ontology="GOMF")
@@ -51,8 +50,7 @@ visEnrichment(eoutput, layout.orientation="top_bottom", zlim=c(0,4))
 #### look at Pfam domains annotated by the most signficant term
 tmp <- as.character(view(eoutput, top_num=1, sortBy="pvalue", details=T)$members)
 tmp <- unlist(strsplit(tmp,","))
-ind <- match(tmp,rowNames(Pfam))
-Data(Pfam)[ind,]
+Data(Pfam)[match(tmp,rowNames(Pfam)),]
 
 ## 3) GOCC enrichment analysis, producing an object of S4 class 'Eoutput'
 eoutput <- dcEnrichment(data, domain="Pfam", ontology="GOCC")
@@ -64,19 +62,11 @@ view(eoutput, top_num=5, sortBy="pvalue", details=FALSE)
 ### visualise the top 5 significant terms in GOMF DAG
 #### color-coded according to 10-based negative logarithm of adjusted p-values (adjp)
 visEnrichment(eoutput)
+#### look at Pfam domains annotated by the most signficant term
+tmp <- as.character(view(eoutput, top_num=1, sortBy="pvalue", details=T)$members)
+tmp <- unlist(strsplit(tmp,","))
+Data(Pfam)[match(tmp,rowNames(Pfam)),]
 
-
-a <- as.character(view(eoutput, top_num=1, sortBy="pvalue", details=T)$members)
-a <- unlist(strsplit(a,","))
-
-### load Pfam domain informtion (as 'InfoDataFrame' object)
-Pfam <- dcRDataLoader('Pfam')
-Pfam
-### prepare the node labels (including domain id and description)
-ind <- match(a,rowNames(Pfam))
-Data(Pfam)[ind,]
-
-vertex.label <- paste(V(ig)$name, '\n', as.character(dData(Anno)[ind,]$description), sep='')
 
 #---------------------------------------------------------------------
 #---------------------------------------------------------------------

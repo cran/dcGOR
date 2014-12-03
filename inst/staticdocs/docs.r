@@ -122,10 +122,46 @@ list(
             )
         ),
         sd_section("Complete domains (domain-ome) in Eukaryotic tree of life (eTOL)",
-            "These databases are used for domain-centric genome analysis in Eukaryotes. Note: these domains are defined as SCOP domain superfamilies.",
+            "These databases and functions are used for domain-centric genome analysis in Eukaryotes. Note: these domains are defined as SCOP domain superfamilies.",
             c(
                 "Ancestral_domainome",
-                "eTOL"
+                "eTOL",
+                "dcAncestralML",
+                "dcAncestralMP",
+                "dcSubtreeClade",
+                "dcSubtreeTips",
+                "dcTreeConnectivity",
+                "dcDuplicated"
+            )
+        ),
+        sd_section("Functions for domain-centric ontology creation and ontology term predictions",
+            "These functions are used for creating domain-centric ontology, which in turn is used for predicting domain-centric ontology terms from input protein domain architectures.",
+            c(
+                "dcSplitArch",
+                "dcFunArgs",
+                "dcSparseMatrix",
+                "dcAlgo",
+                "dcAlgoPropagate",
+                "dcAlgoPredict",
+                "dcAlgoPredictMain",
+                "dcAlgoPredictGenome"
+            )
+        ),
+        sd_section("Databases used for ontology term predictions",
+            "These databases contain ontology annotations (along with hypergeometric scores) for domains and domain combinations, which are then used for domain-centric ontology term predictions.",
+            c(
+                "Feature2GOBP.sf",
+                "Feature2GOMF.sf",
+                "Feature2GOCC.sf",
+                "Feature2HPPA.sf",
+                "Feature2GOBP.pfam",
+                "Feature2GOMF.pfam",
+                "Feature2GOCC.pfam",
+                "Feature2HPPA.pfam",
+                "Feature2GOBP.interpro",
+                "Feature2GOMF.interpro",
+                "Feature2GOCC.interpro",
+                "Feature2HPPA.interpro"
             )
         )
 
