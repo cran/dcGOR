@@ -140,11 +140,16 @@ list(
                 "dcSplitArch",
                 "dcFunArgs",
                 "dcSparseMatrix",
+                "dcList2Matrix",
+                "dcSupraBetter",
                 "dcAlgo",
                 "dcAlgoPropagate",
                 "dcAlgoPredict",
                 "dcAlgoPredictMain",
-                "dcAlgoPredictGenome"
+                "dcAlgoPredictGenome",
+                "dcAlgoPredictPR",
+                "dcRWRpredict",
+                "dcNaivePredict"
             )
         ),
         sd_section("Databases used for ontology term predictions",
