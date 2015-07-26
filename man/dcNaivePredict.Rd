@@ -8,7 +8,8 @@ dcNaivePredict(data, GSP.file, output.file = NULL, ontology = c(NA,
 "GOBP",
 "GOMF", "GOCC", "DO", "HPPA", "HPMI", "HPON", "MP", "EC", "KW", "UP"),
 max.num = 1000, verbose = T, RData.ontology.customised = NULL,
-RData.location = "http://dcgor.r-forge.r-project.org/data")
+RData.location =
+"https://github.com/hfang-bristol/RDataCentre/blob/master/dcGOR")
 }
 \arguments{
 \item{data}{an input vector containing genes/proteins to be predicted}
@@ -55,19 +56,7 @@ analysis using their own ontology. See \code{\link{dcBuildOnto}} for
 how to creat this object}
 
 \item{RData.location}{the characters to tell the location of built-in
-RData files. By default, it remotely locates at
-"http://supfam.org/dcGOR/data" or
-"http://dcgor.r-forge.r-project.org/data". For the user equipped with
-fast internet connection, this option can be just left as default. But
-it is always advisable to download these files locally. Especially when
-the user needs to run this function many times, there is no need to ask
-the function to remotely download every time (also it will
-unnecessarily increase the runtime). For examples, these files (as a
-whole or part of them) can be first downloaded into your current
-working directory, and then set this option as:
-\eqn{RData.location="."}. If RData to load is already part of package
-itself, this parameter can be ignored (since this function will try to
-load it via function \code{data} first)}
+RData files. See \code{\link{dcRDataLoader}} for details}
 }
 \value{
 a data frame containing three columns: 1st column the same as the input

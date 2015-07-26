@@ -24,9 +24,7 @@ a list containing arguments and their default values
 input file with three columns.
 }
 \note{
-This function is potentially useful when debugging. Because the
-developer does not have to specify default values for all arguments
-except those arguments are of interest
+None
 }
 \examples{
 # create a sparse matrix of 4 X 2
